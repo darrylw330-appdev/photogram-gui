@@ -3,12 +3,12 @@
 <dl>
   <dt>Image</dt>
   <dd>
-    <img src="<%= @the_photo.image %>">
+    <img src=" <%= @the_photo.image %> ">
   </dd>
 
   <dt>Caption</dt>
   <dd>
-    <p><%= @the_photo.caption %></p>
+    <p> <%= @the_photo.caption %></p>
   </dd>
 
   <dt>Owner</dt>
@@ -30,7 +30,7 @@
       <label for="browser_caption">Caption</label>
       <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..."><%= @the_photo.caption %></textarea>
 
-      <button>Update photo</button>
+      <button type="submit">Update photo</button>
     </form>
   </dd>
 
@@ -50,8 +50,7 @@
     <th>Comment</th>
     <th>Posted</th>
   </tr>
-
-  <% @the_photo.comments.each do |a_comment| %>
+<% @the_photo.comments.each do |a_comment|%>
   <tr>
     <td>
       <%= a_comment.commenter.username %>
@@ -66,9 +65,9 @@
     </td>
   </tr>
   <% end %>
-</table>
+  </table>
 
-<h3>Add a new comment </h3>
+<h3>Add a new comment</h3> 
 
 <form action="/insert_comment_record">
   <label for="browser_photo_id">Photo ID</label>

@@ -1,3 +1,6 @@
+
+ 
+
 # == Schema Information
 #
 # Table name: users
@@ -16,6 +19,8 @@ class User < ApplicationRecord
     :presence => true,
     :uniqueness => { :case_sensitive => false },
   })
+  
+
 
   def comments
     my_id = self.id
@@ -43,7 +48,7 @@ class User < ApplicationRecord
 
   def liked_photos
     my_likes = self.likes
-
+    
     array_of_photo_ids = Array.new
 
     my_likes.each do |a_like|
@@ -57,7 +62,7 @@ class User < ApplicationRecord
 
   def commented_photos
     my_comments = self.comments
-
+    
     array_of_photo_ids = Array.new
 
     my_comments.each do |a_comment|
@@ -105,7 +110,7 @@ class User < ApplicationRecord
 
   def followers
     my_accepted_received_follow_requests = self.accepted_received_follow_requests
-
+    
     array_of_user_ids = Array.new
 
     my_accepted_received_follow_requests.each do |a_follow_request|
@@ -119,7 +124,7 @@ class User < ApplicationRecord
 
   def leaders
     my_accepted_sent_follow_requests = self.accepted_sent_follow_requests
-
+    
     array_of_user_ids = Array.new
 
     my_accepted_sent_follow_requests.each do |a_follow_request|
@@ -135,7 +140,7 @@ class User < ApplicationRecord
     array_of_photo_ids = Array.new
 
     my_leaders = self.leaders
-
+    
     my_leaders.each do |a_user|
       leader_own_photos = a_user.own_photos
 
@@ -153,7 +158,7 @@ class User < ApplicationRecord
     array_of_photo_ids = Array.new
 
     my_leaders = self.leaders
-
+    
     my_leaders.each do |a_user|
       leader_liked_photos = a_user.liked_photos
 

@@ -1,62 +1,47 @@
 class UsersController < ApplicationController
-  skip_before_action(:force_user_sign_in, { :only => [:index] })
-
   def index
     matching_users = User.all
-
     @list_of_users = matching_users.order({ :username => :asc })
 
-    render({ :template => "users/index.html.erb" })
+    render({ :template => "user_templates/index.html.erb"})
   end
 
   def show
-    path_user = params.fetch("path_id")
-
-    matching_user = User.where({ :username => path_user })
-
-    @the_user = matching_user.first
-
+    # Params = {"path_username"=>"anisa"}
+    url_username = params.fetch("path_username")
+    matching_usernames = User.where({ :username => url_username })
+    @the_user = matching_usernames.first
     
-    @matching_request = FollowRequest.where({ :recipient_id => @the_user.id, :sender_id => @current_user.id }).first
-    
-    if @the_user.private?
-      if @the_user.followers.include?(@current_user) && @matching_request.status == "accepted"
-        render({ :template => "users/show.html.erb" })
-      else
-        redirect_to("/", { :alert => "You're not authorized for that." })
-      end
-    else
-        render({ :template => "users/show.html.erb" })
-    end
+    # If you want to write your code defensively!
+    # if the_user == nil
+      # redirect_to("/404")
+    # else
+      render({ :template => "user_templates/show.html.erb"})
+    # end
   end
 
-  def show_liked
-    path_user = params.fetch("path_id")
+  def create
+    # params = {"query_name"=>"Jazmine"}
+    input_user = params.fetch("query_name")
 
-    matching_user = User.where({ :username => path_user })
+    new_user = User.new
+    new_user.username = input_user
+    new_user.save
 
-    @the_user = matching_user.first
-
-    render({ :template => "users/show_liked.html.erb"})
+    redirect_to("/users/#{new_user.username}")
   end
 
-  def show_feed
-    path_user = params.fetch("path_id")
+  def update
+    # Params = {"update_un"=>"august", "path_username"=>"augustine"}
+    the_username = params.fetch("modify_name")
+    matching_user = User.where({ :username => the_username })
+    the_user = matching_user.first
 
-    matching_user = User.where({ :username => path_user })
+    input_username = params.fetch("update_un")
 
-    @the_user = matching_user.first
+    the_user.username = input_username
+    the_user.save
 
-    render({ :template => "users/show_feed.html.erb"})
-  end
-
-  def show_discover
-    path_user = params.fetch("path_id")
-
-    matching_user = User.where({ :username => path_user })
-
-    @the_user = matching_user.first
-
-    render({ :template => "users/show_discover.html.erb"})
+    redirect_to("/users/#{the_user.username}")
   end
 end

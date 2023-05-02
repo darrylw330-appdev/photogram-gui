@@ -1,24 +1,24 @@
 <h1>List of photos</h1>
 
 <hr>
+
 <form action="/insert_photo">
   <label for="image_box">Image</label>
-  <input id="image_box" name="query_image">
+  <input id="image_box" name="query_image" placeholder="Image URL">
 
   <label for="caption_box">Caption</label>
-  <textarea id="caption_box" name="query_caption"></textarea>
+  <textarea id="caption_box" name="query_caption" placeholder="Enter a caption for the photo"></textarea>
 
   <label for="owner_id_box">Owner ID</label>
-  <input id="owner_id_box" name="query_owner_id">
-
+  <input id="owner_id_box" name="query_owner_id" placeholder="Enter an ID of a user">
+  
   <button>Add photo</button>
 </form>
 
 <hr>
 
 <table border="1">
-
- <tr>
+  <tr>
     <th>Image</th>
     <th>Caption</th>
     <th>Owner</th>
@@ -37,11 +37,11 @@
       </td>
 
       <td>
-        <%=a_photo.poster.username %>
+        <%= a_photo.poster.username %>
       </td>
 
       <td>
-        <%=a_photo.created_at%>
+        <%= a_photo.created_at %>
       </td>
 
       <td>
@@ -50,6 +50,5 @@
         </a>
       </td>
     </tr>
-     
   <% end %>
 </table>

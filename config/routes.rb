@@ -1,25 +1,37 @@
 Rails.application.routes.draw do
+  get("/", { controller: "users", action: "index" })
 
-  get("/", { :controller => "users", :action => "index" })
-
-  get("/users", { :controller => "users", :action => "index" })
-
-  get("/users/:path_username", { :controller => "users", :action => "show"})
-
-  get("/insert_user", { :controller => "users", :action => "create" })
-
-  get("/update_username/:modify_name", { :controller => "users", :action => "update" })
+  ##user routes
+  get("/users", { controller: "users", action: "index" })
   
-  get("/photos", { :controller => "photos", :action => "index" })
+  get("/users/:username", { controller: "users", action: "show"})
 
-  get("/photos/:path_id", { :controller => "photos", :action => "show" })
+  ##create user
+  get("/insert_user_record", { controller: "users", action: "create"})
 
-  get("/delete_photo/:toast_id", { :controller => "photos", :action => "baii" })
+  ## update user
+  get("/update_user/:the_user_id", { controller: "users", action: "update"})
 
-  get("/insert_photo", { :controller => "photos", :action => "create" })
 
-  get("/update_photo/:modify_id", { :controller => "photos", :action => "update" })
 
-  get("/insert_comment", { :controller => "photos", :action => "create_comment" })
 
+
+## photo routes
+  get("/photos", { controller: "photos",  action: "index" })
+
+  ## create
+  get("/insert_photo_record", { controller: "photos", action: "create" })
+
+  ## read
+  get("/photos/:the_photo_id", { controller: "photos", action: "show"})
+
+  ## update
+  get("/update_photo/:the_photo_id", { controller: "photos", action: "update" })
+
+  ## delete
+  get("/delete_photo/:the_photo_id", { controller: "photos", action: "destroy" })
+
+
+  ## comments
+  post("/insert_comment_record", { controller: "comments", action: "create" })
 end

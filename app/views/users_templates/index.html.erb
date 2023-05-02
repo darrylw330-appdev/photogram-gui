@@ -1,11 +1,8 @@
 <h1>List of users</h1>
 
-<!--work on this one -->
-
-  <form action="/insert_user_record">
-  <label for="browser_username">Username</label>
-  <input id="browser_username" type="text" name="input_username" placeholder="Enter a username...">
-
+<form action="/insert_user">
+  <label for="add_user">Username</label>
+  <input id="add_user" name="query_name" placeholder="Enter a username">
   <button>Add user</button>
 </form>
 
@@ -16,31 +13,29 @@
     <th>
       ID
     </th>
-  
+
     <th>
-      Username 
+      Username
     </th>
 
     <th>
+      
     </th>
   </tr>
 
-   <% @list_of_users.each do |a_user| %>
-  <tr>
-     <td>
-      <%= a_user.id %> 
-     </td>
-
-     <td>
-      <%= a_user.username %> 
-     </td>
+  <% @list_of_users.each do |a_user| %>
+    <tr>
+      <td>
+        <%= a_user.id %>
+      </td>
 
       <td>
-      <a href="/users/<%= a_user.username %>">
-       Show details
-       </a>
-     </td>
-  </tr>
-   <% end %>
-   
+        <%= a_user.username %>
+      </td>
+
+      <td>
+        <a href="/users/<%= a_user.username %>">Show details</a>
+      </td>
+    </tr>
+  <% end %>
 </table>

@@ -1,39 +1,40 @@
-<h1><%=@the_user.username%></h1>
+<h1><%= @the_user.username %></h1>
 
 <dl>
-<dt>ID</dt>
-<dd><%=@the_user.id%></dd>
-<dt>Edit user</dt>
-<dd>
-    <form action="/update_user/<%=@the_user.username%>">
-      <label for="browser_username">Username</label>
-      <input id="browser_username" type="text" name="input_username" value="<%=@the_user.username%>" placeholder="Enter a username..." >
+  <dt>ID</dt>
 
-      <button type="submit">Update user</button>
+  <dd> <%= @the_user.id %> </dd>
+
+  <dt>Edit user</dt>
+
+  <dd>
+    <form action="/update_username/<%= @the_user.username %>">
+      <label for="username">Username</label>
+      <input id="username" name="update_un" value="<%= @the_user.username %>">
+      <button>Update user</button>
     </form>
   </dd>
 </dl>
 
-<h2>Own photos(<%=@the_user.own_photos.count%>)</h2>
+<h2>Own photos (<%= @the_user.own_photos.count %>)</h2>
 
 <table border="1">
-<tr>
-<th>Image</th>
-<th>Owner</th>
-<th>Caption</th>
-<th>Posted</th>
-<th></th>
-</tr>
+  <tr>
+    <th>Image</th>
+    <th>Owner</th>
+    <th>Caption</th>
+    <th>Posted</th>
+    <th> </th>
+  </tr>
 
-<%@the_user.own_photos.each do |a_photo|%>
-<tr>
-<td>
-<img src="<%=a_photo.image%>">
-</td>
-<td><%=a_photo.poster.username%></td>
-<td><%=a_photo.caption%></td>
-<td><%=a_photo.created_at%></td>
-<td><a href="/">Show details</a></td>
-</tr>
-<%end%>
+  <% @the_user.own_photos.each do |a_photo| %>
+    <tr>
+      <td> <img src="<%= a_photo.image %>"> </td>
+      <td><%= a_photo.poster.username %></td>
+      <td><%= a_photo.caption %></td>
+      <td><%= a_photo.created_at %></td>
+      <td> <a>Show details</a> </td>
+    </tr>
+  <% end %>
+
 </table>

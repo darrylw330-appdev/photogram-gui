@@ -1,47 +1,36 @@
 class UsersController < ApplicationController
+
   def index
     matching_users = User.all
-    @list_of_users = matching_users.order({ :username => :asc })
-
-    render({ :template => "user_templates/index.html.erb"})
-  end
-
-  def show
-    # Params = {"path_username"=>"anisa"}
-    url_username = params.fetch("path_username")
-    matching_usernames = User.where({ :username => url_username })
-    @the_user = matching_usernames.first
-    
-    # If you want to write your code defensively!
-    # if the_user == nil
-      # redirect_to("/404")
-    # else
-      render({ :template => "user_templates/show.html.erb"})
-    # end
+    @list_of_users = matching_users
+    render({ template: "user_templates/index.html.erb" })
   end
 
   def create
-    # params = {"query_name"=>"Jazmine"}
-    input_user = params.fetch("query_name")
+    user = User.new
 
-    new_user = User.new
-    new_user.username = input_user
-    new_user.save
+    user.username = params.fetch("input_username")
 
-    redirect_to("/users/#{new_user.username}")
+    user.save
+
+    redirect_to("/users/#{user.username}")
+  end
+
+  def show
+    @user = User.find_by(username: params[:username])
+
+    render({ template: "user_templates/show.html.erb" })
   end
 
   def update
-    # Params = {"update_un"=>"august", "path_username"=>"augustine"}
-    the_username = params.fetch("modify_name")
-    matching_user = User.where({ :username => the_username })
-    the_user = matching_user.first
-
-    input_username = params.fetch("update_un")
-
-    the_user.username = input_username
-    the_user.save
-
-    redirect_to("/users/#{the_user.username}")
+    id = params.fetch("the_user_id")
+    user = User.where({ id: id }).at(0)
+  
+    user.username = params.fetch("username")
+      
+    user.save
+    redirect_to("/users/#{user.username}")
   end
+  
+
 end

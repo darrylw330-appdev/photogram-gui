@@ -3,32 +3,32 @@
 <dl>
   <dt>Image</dt>
   <dd>
-    <img src="<%= @the_photo.image %>">
+    <img src="<%= @photo.image %>">
   </dd>
 
   <dt>Caption</dt>
   <dd>
-    <p><%= @the_photo.caption %></p>
+    <p><%= @photo.caption %></p>
   </dd>
 
   <dt>Owner</dt>
   <dd>
-    <%= @the_photo.poster.username %>
+    <%= @photo.poster.username %>
   </dd>
 
   <dt>Posted</dt>
   <dd>
-    <%= @the_photo.created_at %>
+    2 months ago
   </dd>
 
   <dt>Edit photo</dt>
   <dd>
-    <form action="/update_photo/<%= @the_photo.id %>">
+    <form action="/update_photo/<%= @photo.id %>">
       <label for="browser_image">Image</label>
-      <input id="browser_image" type="text" name="query_image" placeholder="Enter a URL for the image..." value="<%= @the_photo.image %>">
+      <input id="browser_image" type="text" name="input_image" placeholder="Enter a URL for the image..." value="<%= @photo.image %>">
 
       <label for="browser_caption">Caption</label>
-      <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..."><%= @the_photo.caption %></textarea>
+      <textarea id="browser_caption" name="input_caption" placeholder="Enter a caption for the photo..."><%= @photo.caption %></textarea>
 
       <button>Update photo</button>
     </form>
@@ -36,7 +36,7 @@
 
   <dt>Delete photo</dt>
   <dd>
-    <a href="/delete_photo/<%= @the_photo.id %>">
+    <a href="/delete_photo/<%= @photo.id %>;">
       Delete this photo
     </a>
   </dd>
@@ -50,34 +50,36 @@
     <th>Comment</th>
     <th>Posted</th>
   </tr>
-  <% @the_comments.each do |a_comment| %>
+
+  <% @photo.comments.each do |comment| %>
   <tr>
     <td>
-      <%= a_comment.commenter.username %>
+      <%= comment.commenter.username %>
     </td>
 
     <td>
-      <%= a_comment.body %>
+      <%= comment.body %>
     </td>
 
     <td>
-      <%= a_comment.created_at %>
+      <%= comment.created_at %>
     </td>
   </tr>
+  
   <% end %>
 </table>
 
 <h3>Add a new comment</h3>
 
-<form action="/insert_comment">
-  <label for="photo_id">Photo ID</label>
-  <input id="photo_id" name="query_photo_id" value="<%= @the_photo.id %>">
+<form action="/insert_comment_record" method="post">
+  <label for="browser_photo_id">Photo ID</label>
+  <input id="browser_photo_id" type="text" value="<%= @photo.id %>" name="input_photo_id">
 
-  <label for="author_id">Author ID</label>
-  <input id="author_id" name="query_author_id">
+  <label for="browser_author_id">Author ID</label>
+  <input id="browser_author_id" type="text" name="input_author_id">
 
-  <label for="comment">Comment</label>
-  <textarea id="comment" name="query_comment" placeholder="Enter a comment"></textarea>
+  <label for="browser_comment">Comment</label>
+  <textarea id="browser_comment" name="input_body" placeholder="Enter a comment..."></textarea>
 
   <button>Add comment</button>
 </form>

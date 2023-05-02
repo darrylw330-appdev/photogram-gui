@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-
   def create
     comment = Comment.new
     comment.author_id = params.fetch("input_author_id")
@@ -7,10 +6,6 @@ class CommentsController < ApplicationController
     comment.body = params.fetch("input_body")
     comment.save
 
-    redirect_to("/photos/#{comment.photo_id}")  
+    redirect_to("/photos/#{comment.photo_id}")
   end
-
-
-
-
 end

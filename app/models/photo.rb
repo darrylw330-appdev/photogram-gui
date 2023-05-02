@@ -11,61 +11,17 @@
 #  updated_at     :datetime         not null
 #  owner_id       :integer
 #
-
 class Photo < ApplicationRecord
-  validates(:poster, { :presence => true })
+  validates(:owner_id, { :presence => true })
+  validates(:image, { :presence => true })
 
-  def poster
-    my_owner_id = self.owner_id
+  mount_uploader :image, ImageUploader
 
-    matching_users = User.where({ :id => my_owner_id })
+  belongs_to(:owner, { :required => true, :class_name => "User", :foreign_key => "owner_id", :counter_cache => true })
+  has_many(:likes, { :class_name => "Like", :foreign_key => "photo_id", :dependent => :destroy })
+  has_many(:comments, { :class_name => "Comment", :foreign_key => "photo_id", :dependent => :destroy })
 
-    the_user = matching_users.at(0)
-
-    return the_user
-  end
-
-  def comments
-    my_id = self.id
-
-    matching_comments = Comment.where({ :photo_id => self.id })
-
-    return matching_comments
-  end
-
-  def likes
-    my_id = self.id
-
-    matching_likes = Like.where({ :photo_id => self.id })
-
-    return matching_likes
-  end
-
-  def fans
-    my_likes = self.likes
-    
-    array_of_user_ids = Array.new
-
-    my_likes.each do |a_like|
-      array_of_user_ids.push(a_like.fan_id)
-    end
-
-    matching_users = User.where({ :id => array_of_user_ids })
-
-    return matching_users
-  end
-
-  def fan_list
-    my_fans = self.fans
-
-    array_of_usernames = Array.new
-
-    my_fans.each do |a_user|
-      array_of_usernames.push(a_user.username)
-    end
-
-    formatted_usernames = array_of_usernames.to_sentence
-
-    return formatted_usernames
-  end
+  has_many(:fans, { :through => :likes, :source => :user })
+  has_many(:followers, { :through => :owner, :source => :following })
+  has_many(:fan_followers, { :through => :fans, :source => :following })
 end

@@ -9,17 +9,11 @@
 #  author_id  :integer
 #  photo_id   :integer
 #
-
 class Comment < ApplicationRecord
-  validates(:commenter, { :presence => true })
+  validates(:photo_id, { :presence => true })
+  validates(:body, { :presence => true })
+  validates(:author_id, { :presence => true })
 
-  def commenter
-    my_author_id = self.author_id
-
-    matching_users = User.where({ :id => my_author_id })
-
-    the_user = matching_users.at(0)
-
-    return the_user
-  end
+  belongs_to(:commenter, { :required => true, :class_name => "User", :foreign_key => "author_id" })
+  belongs_to(:photo, { :required => true, :class_name => "Photo", :foreign_key => "photo_id", :counter_cache => true })
 end

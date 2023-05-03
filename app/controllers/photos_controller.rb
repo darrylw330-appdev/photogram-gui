@@ -1,15 +1,11 @@
-
- 
-
 class PhotosController < ApplicationController
-
   def index
     @photos = Photo.all
 
     render({ template: "photo_templates/index.html.erb" })
   end
 
-  def create 
+  def create
     user_id = params.fetch("input_owner_id")
     image = params.fetch("input_image")
     caption = params.fetch("input_caption")
@@ -20,11 +16,11 @@ class PhotosController < ApplicationController
     photo.save
     redirect_to("/photos/#{photo.id}")
   end
-  
+
   def show
-      photo_id = params.fetch("the_photo_id")
-      @photo = Photo.where({ id: photo_id}).first
-      render({:template => "photo_templates/show.html.erb"})
+    photo_id = params.fetch("the_photo_id")
+    @photo = Photo.where({ id: photo_id }).at(0)
+    render({ :template => "photo_templates/show.html.erb" })
   end
 
   def update
@@ -41,8 +37,7 @@ class PhotosController < ApplicationController
     id = params.fetch("the_photo_id")
     photo = Photo.find(id)
     photo.destroy
-  
+
     redirect_to("/photos")
   end
-
 end
